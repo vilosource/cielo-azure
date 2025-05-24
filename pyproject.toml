@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "cielo-azure"
+version = "0.1.0"
+description = "Azure resource fetcher"
+authors = ["Example <example@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+azure-identity = "^1.15.0"
+azure-mgmt-compute = "^30.1.0"
+pydantic = "^2.7"
+typer = {extras = ["all"], version = "^0.12.0"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1"
+mypy = "^1.10"
+
+[tool.poetry.scripts]
+cielo = "cielo_azure.cli.main:app"
