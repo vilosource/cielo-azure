@@ -6,17 +6,19 @@ from abc import ABC, abstractmethod
 from typing import Generic, List, TypeVar
 
 from pydantic import BaseModel
+from typing import TYPE_CHECKING
 
-try:  # pragma: no cover
-    from azure.core.credentials import TokenCredential as AzureTokenCredential
-except Exception:  # pragma: no cover - fallback if azure packages missing
-    from typing import Protocol
+if TYPE_CHECKING:  # pragma: no cover - for static type checking
+    from azure.core.credentials import TokenCredential
+else:  # pragma: no cover - runtime fallback if azure packages missing
+    try:
+        from azure.core.credentials import TokenCredential
+    except Exception:
+        from typing import Protocol
 
-    class AzureTokenCredential(Protocol):
-        def get_token(self, *scopes: str) -> str:
-            ...
-
-TokenCredential = AzureTokenCredential
+        class TokenCredential(Protocol):
+            def get_token(self, *scopes: str) -> str:
+                ...
 
 ModelT = TypeVar("ModelT", bound=BaseModel)
 
